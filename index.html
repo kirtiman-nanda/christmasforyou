@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pink Christmas Magic 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #ffd1e8, #ff8fcf, #7a1b4b);
+  color: white;
+}
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 480px;
+  padding: 35px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(18px);
+  border-radius: 25px;
+  box-shadow: 0 0 50px rgba(255, 105, 180, 0.6);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-15px); }
+}
+
+h1 {
+  font-size: 2.4em;
+  text-shadow: 0 0 15px pink;
+}
+
+p {
+  margin: 15px 0;
+  line-height: 1.6;
+}
+
+.nav {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.nav a {
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 30px;
+  background: linear-gradient(45deg, #ff69b4, #ffb6d9);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.nav a:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 35px rgba(255, 105, 180, 1);
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>Merry Christmas 🎄</h1>
+  <p>
+    Welcome to your little pink Christmas world 💖  
+    Click anywhere below and explore the magic ✨
+  </p>
+
+  <div class="nav">
+         <a href="tree.html">🎀 Something for you</a>
+       <a href="garden.html">🌸 Enter the Magic Garden</a>
+    <a href="wish.html">🎀 Visit the Wish Room</a>
+  </div>
+
+  <p style="margin-top:20px;opacity:0.8;">
+    Made for you! ✨
+  </p>
+</div>
+
+</body>
+</html>

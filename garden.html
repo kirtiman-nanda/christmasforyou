@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Magic Garden 🌸</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(to bottom, #ffb6d9, #ff69b4);
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
+
+/* Heading */
+h2 {
+  text-align: center;
+  padding: 15px;
+  text-shadow: 0 0 10px pink;
+}
+
+/* Heart */
+.heart {
+  position: absolute;
+  font-size: 45px;
+  left: 50%;
+  top: 25%;
+  transform: translateX(-50%);
+  cursor: grab;
+  user-select: none;
+}
+
+/* Tree */
+.tree {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  transition: filter 0.6s;
+}
+
+.tree span {
+  font-size: 110px;
+}
+
+/* Message */
+.message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(15px);
+  padding: 30px;
+  border-radius: 25px;
+  text-align: center;
+  display: none;
+  box-shadow: 0 0 40px rgba(255,105,180,0.8);
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Back */
+.back {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  color: #ff69b4;
+  padding: 10px 25px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Drag your heart 💖 to the Christmas tree 🎄</h2>
+
+<div class="heart" id="heart">💖</div>
+
+<div class="tree" id="tree">
+  <span>🎄</span>
+</div>
+
+<div class="message" id="message">
+  <h3>🎄 Merry Christmas 💖</h3>
+  <p>
+    You just shared your heart ✨  
+    May your life be filled with warmth, kindness,  
+    and moments that make you smile 🌸
+  </p>
+</div>
+
+<a class="back" href="index.html">⬅ Back Home</a>
+
+<script>
+const heart = document.getElementById("heart");
+const tree = document.getElementById("tree");
+const message = document.getElementById("message");
+
+let dragging = false;
+
+heart.addEventListener("mousedown", () => dragging = true);
+document.addEventListener("mouseup", () => dragging = false);
+
+document.addEventListener("mousemove", e => {
+  if (!dragging) return;
+
+  heart.style.left = e.clientX - 20 + "px";
+  heart.style.top = e.clientY - 20 + "px";
+
+  const h = heart.getBoundingClientRect();
+  const t = tree.getBoundingClientRect();
+
+  if (
+    h.right > t.left &&
+    h.left < t.right &&
+    h.bottom > t.top &&
+    h.top < t.bottom
+  ) {
+    success();
+  }
+});
+
+function success() {
+  dragging = false;
+  heart.style.display = "none";
+  tree.style.filter = "drop-shadow(0 0 30px hotpink)";
+  message.style.display = "block";
+}
+</script>
+
+</body>
+</html>

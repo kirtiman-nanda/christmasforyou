@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wish Room 🎀</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle, #ffd1e8, #ff69b4);
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  text-align: center;
+}
+
+h2 {
+  padding: 20px;
+  text-shadow: 0 0 10px pink;
+}
+
+.ball {
+  display: inline-block;
+  font-size: 50px;
+  margin: 20px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.ball:hover {
+  transform: scale(1.2) rotate(10deg);
+}
+
+#wish {
+  margin-top: 30px;
+  font-size: 1.2em;
+  padding: 15px;
+  min-height: 60px;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 30px;
+  background: white;
+  color: #ff69b4;
+  padding: 10px 25px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Click an ornament 🎄 Make a wish ✨</h2>
+
+<div class="ball" onclick="wish('May your days glow with happiness 💖')">🎀</div>
+<div class="ball" onclick="wish('May love and laughter follow you always 🌸')">💗</div>
+<div class="ball" onclick="wish('May every dream bloom beautifully ✨')">🎄</div>
+
+<div id="wish"></div>
+
+<a class="back" href="index.html">⬅ Back Home</a>
+
+<script>
+function wish(text) {
+  document.getElementById('wish').innerText = text;
+}
+</script>
+
+</body>
+</html>

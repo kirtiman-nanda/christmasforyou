@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A Little Christmas Magic 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #ffd1e8, #ff7ac8, #7a1b4b);
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  color: white;
+}
+
+/* ===== INSTRUCTIONS ===== */
+.instruction {
+  text-align: center;
+  padding: 15px;
+  font-size: 1.2em;
+  text-shadow: 0 0 10px pink;
+}
+
+/* ===== TREE ===== */
+.tree {
+  position: absolute;
+  left: 50%;
+  bottom: 90px;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+}
+
+.layer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 120px solid transparent;
+  border-right: 120px solid transparent;
+  border-bottom: 160px solid #ffb6d9;
+  filter: drop-shadow(0 0 15px #ff5fbf);
+}
+
+.layer.two {
+  top: 40px;
+  border-left: 90px solid transparent;
+  border-right: 90px solid transparent;
+  border-bottom: 130px solid #ff9fd6;
+}
+
+.layer.three {
+  top: 80px;
+  border-left: 60px solid transparent;
+  border-right: 60px solid transparent;
+  border-bottom: 100px solid #ff7ac8;
+}
+
+.star {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2em;
+  text-shadow: 0 0 15px pink;
+}
+
+/* ===== HEART ===== */
+.heart {
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 45px;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.2s;
+}
+
+.heart:active {
+  cursor: grabbing;
+  transform: scale(1.2);
+}
+
+/* ===== SUCCESS ===== */
+.message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  padding: 30px;
+  border-radius: 25px;
+  text-align: center;
+  display: none;
+  box-shadow: 0 0 40px rgba(255, 105, 180, 0.8);
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  from { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
+  to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.message h2 {
+  margin-bottom: 10px;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 20px;
+  background: white;
+  color: #ff69b4;
+  padding: 10px 25px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="instruction">
+  Drag the heart 💖 to the Christmas tree 🎄
+</div>
+
+<div class="heart" id="heart">💖</div>
+
+<div class="tree" id="tree">
+  <div class="star">⭐</div>
+  <div class="layer"></div>
+  <div class="layer two"></div>
+  <div class="layer three"></div>
+</div>
+
+<div class="message" id="message">
+  <h2>🎄 Merry Christmas 💖</h2>
+  <p>
+    You just filled this tree with love ✨  
+    May your days be warm, kind, and full of smiles 🌸
+  </p>
+  <a class="back" href="index.html">Back Home</a>
+</div>
+
+<script>
+const heart = document.getElementById("heart");
+const tree = document.getElementById("tree");
+const message = document.getElementById("message");
+
+let dragging = false;
+
+heart.addEventListener("mousedown", () => dragging = true);
+document.addEventListener("mouseup", () => dragging = false);
+
+document.addEventListener("mousemove", e => {
+  if (dragging) {
+    heart.style.left = e.clientX - 20 + "px";
+    heart.style.top = e.clientY - 20 + "px";
+
+    const heartRect = heart.getBoundingClientRect();
+    const treeRect = tree.getBoundingClientRect();
+
+    if (
+      heartRect.right > treeRect.left &&
+      heartRect.left < treeRect.right &&
+      heartRect.bottom > treeRect.top &&
+      heartRect.top < treeRect.bottom
+    ) {
+      triggerSuccess();
+    }
+  }
+});
+
+function triggerSuccess() {
+  dragging = false;
+  heart.style.display = "none";
+  tree.style.filter = "drop-shadow(0 0 40px hotpink)";
+  message.style.display = "block";
+}
+</script>
+
+</body>
+</html>
