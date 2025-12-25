@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Christmas Magic 🎄💖</title>
+<title>Christmas Magic 🌸💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
   margin: 0;
@@ -15,6 +16,7 @@ body {
   text-align: center;
 }
 
+/* Heading */
 h2 {
   padding: 20px;
   text-shadow: 0 0 10px pink;
@@ -24,35 +26,25 @@ h2 {
 .tree {
   position: relative;
   display: inline-block;
-  margin-top: 50px;
 }
 .tree span {
   font-size: 150px;
   text-shadow: 0 0 15px #ff69b4;
 }
 
-/* Gifts */
-.gift {
-  display: inline-block;
-  margin: 20px;
-  font-size: 50px;
+/* Ornaments */
+.ornament {
+  position: absolute;
+  font-size: 40px;
   cursor: pointer;
   transition: transform 0.3s;
 }
-.gift:hover {
-  transform: scale(1.2) rotate(-10deg);
+.ornament:hover {
+  transform: scale(1.3);
 }
-
-/* Floating hearts */
-.heart {
-  position: absolute;
-  font-size: 25px;
-  animation: float 3s infinite ease-in-out;
-}
-@keyframes float {
-  0% { transform: translateY(0); opacity: 0.7; }
-  50% { transform: translateY(-40px); opacity: 1; }
-  100% { transform: translateY(0); opacity: 0.7; }
+.ornament.clicked {
+  color: #ffb6d9;
+  text-shadow: 0 0 15px #ff69b4;
 }
 
 /* Message */
@@ -61,19 +53,19 @@ h2 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.2);
   backdrop-filter: blur(15px);
   padding: 30px;
   border-radius: 25px;
   text-align: center;
   display: none;
-  box-shadow: 0 0 40px rgba(255,105,180,0.8);
+  box-shadow: 0 0 40px rgba(255, 105, 180,0.8);
+  animation: pop 0.6s ease;
 }
-.message h2 {
-  margin-bottom: 10px;
+@keyframes pop {
+  from { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
+  to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
-
-/* Back button */
 .back {
   display: inline-block;
   margin-top: 20px;
@@ -86,55 +78,41 @@ h2 {
 }
 </style>
 </head>
+
 <body>
 
-<h2>Click the presents under the tree 🎁💖</h2>
+<h2>Click all the ornaments 🎀 to light up the tree! 🎄</h2>
 
 <div class="tree">
   <span>🎄</span>
-</div>
-
-<div>
-  <div class="gift" data-msg="🎀 May your Christmas be filled with love!">🎁</div>
-  <div class="gift" data-msg="✨ Sparkles and joy follow you!">🎁</div>
-  <div class="gift" data-msg="💖 Sending you warm festive hugs!">🎁</div>
+  <div class="ornament" style="top:30px; left:50px;" data-clicked="false">💖</div>
+  <div class="ornament" style="top:80px; left:0px;" data-clicked="false">💗</div>
+  <div class="ornament" style="top:60px; left:100px;" data-clicked="false">💕</div>
 </div>
 
 <div class="message" id="message">
   <h2>🎄 Merry Christmas! 💖</h2>
-  <p id="msgText"></p>
+  <p>All the ornaments are shining! May your days be full of love, magic, and joy 🌸✨</p>
   <a class="back" href="index.html">Back Home</a>
 </div>
 
-<!-- Floating hearts -->
-<div class="heart" style="top:10%; left:20%;">💖</div>
-<div class="heart" style="top:15%; left:70%;">💗</div>
-<div class="heart" style="top:40%; left:50%;">💕</div>
-
 <script>
-const gifts = document.querySelectorAll('.gift');
+const ornaments = document.querySelectorAll('.ornament');
 const message = document.getElementById('message');
-const msgText = document.getElementById('msgText');
+let clickedCount = 0;
 
-let openedCount = 0;
-
-gifts.forEach(gift => {
-  gift.addEventListener('click', () => {
-    msgText.textContent = gift.dataset.msg;
-    message.style.display = 'block';
-    gift.style.visibility = 'hidden';
-    openedCount++;
-    // Final magical message after all gifts opened
-    if(openedCount === gifts.length){
-      setTimeout(() => {
-        msgText.textContent = "💖 You’ve unlocked all the Christmas magic! 🎄✨";
-      }, 1000);
+ornaments.forEach(orn => {
+  orn.addEventListener('click', () => {
+    if (orn.dataset.clicked === "false") {
+      orn.classList.add('clicked');
+      orn.dataset.clicked = "true";
+      clickedCount++;
+    }
+    if (clickedCount === ornaments.length) {
+      // Show message when all clicked
+      message.style.display = 'block';
     }
   });
-});
-
-message.addEventListener('click', () => {
-  message.style.display = 'none';
 });
 </script>
 
