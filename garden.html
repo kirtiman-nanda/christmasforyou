@@ -112,18 +112,34 @@ const message = document.getElementById("message");
 
 let dragging = false;
 
+// Desktop (mouse)
 heart.addEventListener("mousedown", () => dragging = true);
 document.addEventListener("mouseup", () => dragging = false);
-
 document.addEventListener("mousemove", e => {
   if (!dragging) return;
-
   heart.style.left = e.clientX - 20 + "px";
   heart.style.top = e.clientY - 20 + "px";
+  checkCollision();
+});
 
+// Mobile (touch)
+heart.addEventListener("touchstart", e => {
+  e.preventDefault();
+  dragging = true;
+});
+document.addEventListener("touchend", () => dragging = false);
+document.addEventListener("touchmove", e => {
+  if (!dragging) return;
+  const touch = e.touches[0];
+  heart.style.left = touch.clientX - 20 + "px";
+  heart.style.top = touch.clientY - 20 + "px";
+  checkCollision();
+});
+
+// Collision detection
+function checkCollision() {
   const h = heart.getBoundingClientRect();
   const t = tree.getBoundingClientRect();
-
   if (
     h.right > t.left &&
     h.left < t.right &&
@@ -132,7 +148,7 @@ document.addEventListener("mousemove", e => {
   ) {
     success();
   }
-});
+}
 
 function success() {
   dragging = false;
