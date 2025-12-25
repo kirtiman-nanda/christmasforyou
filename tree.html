@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>A Little Christmas Magic 💖</title>
+<title>Christmas Magic 🎄💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 body {
   margin: 0;
@@ -13,101 +12,68 @@ body {
   font-family: 'Segoe UI', sans-serif;
   overflow: hidden;
   color: white;
+  text-align: center;
 }
 
-/* ===== INSTRUCTIONS ===== */
-.instruction {
-  text-align: center;
-  padding: 15px;
-  font-size: 1.2em;
+h2 {
+  padding: 20px;
   text-shadow: 0 0 10px pink;
 }
 
-/* ===== TREE ===== */
+/* Tree */
 .tree {
-  position: absolute;
-  left: 50%;
-  bottom: 90px;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
+  position: relative;
+  display: inline-block;
+  margin-top: 50px;
+}
+.tree span {
+  font-size: 150px;
+  text-shadow: 0 0 15px #ff69b4;
 }
 
-.layer {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 120px solid transparent;
-  border-right: 120px solid transparent;
-  border-bottom: 160px solid #ffb6d9;
-  filter: drop-shadow(0 0 15px #ff5fbf);
+/* Gifts */
+.gift {
+  display: inline-block;
+  margin: 20px;
+  font-size: 50px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.gift:hover {
+  transform: scale(1.2) rotate(-10deg);
 }
 
-.layer.two {
-  top: 40px;
-  border-left: 90px solid transparent;
-  border-right: 90px solid transparent;
-  border-bottom: 130px solid #ff9fd6;
-}
-
-.layer.three {
-  top: 80px;
-  border-left: 60px solid transparent;
-  border-right: 60px solid transparent;
-  border-bottom: 100px solid #ff7ac8;
-}
-
-.star {
-  position: absolute;
-  top: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2em;
-  text-shadow: 0 0 15px pink;
-}
-
-/* ===== HEART ===== */
+/* Floating hearts */
 .heart {
   position: absolute;
-  top: 120px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 45px;
-  cursor: grab;
-  user-select: none;
-  transition: transform 0.2s;
+  font-size: 25px;
+  animation: float 3s infinite ease-in-out;
+}
+@keyframes float {
+  0% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(-40px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0.7; }
 }
 
-.heart:active {
-  cursor: grabbing;
-  transform: scale(1.2);
-}
-
-/* ===== SUCCESS ===== */
+/* Message */
 .message {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.25);
   backdrop-filter: blur(15px);
   padding: 30px;
   border-radius: 25px;
   text-align: center;
   display: none;
-  box-shadow: 0 0 40px rgba(255, 105, 180, 0.8);
-  animation: pop 0.6s ease;
+  box-shadow: 0 0 40px rgba(255,105,180,0.8);
 }
-
-@keyframes pop {
-  from { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
-  to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-}
-
 .message h2 {
   margin-bottom: 10px;
 }
 
+/* Back button */
 .back {
   display: inline-block;
   margin-top: 20px;
@@ -120,66 +86,56 @@ body {
 }
 </style>
 </head>
-
 <body>
 
-<div class="instruction">
-  Drag the heart 💖 to the Christmas tree 🎄
+<h2>Click the presents under the tree 🎁💖</h2>
+
+<div class="tree">
+  <span>🎄</span>
 </div>
 
-<div class="heart" id="heart">💖</div>
-
-<div class="tree" id="tree">
-  <div class="star">⭐</div>
-  <div class="layer"></div>
-  <div class="layer two"></div>
-  <div class="layer three"></div>
+<div>
+  <div class="gift" data-msg="🎀 May your Christmas be filled with love!">🎁</div>
+  <div class="gift" data-msg="✨ Sparkles and joy follow you!">🎁</div>
+  <div class="gift" data-msg="💖 Sending you warm festive hugs!">🎁</div>
 </div>
 
 <div class="message" id="message">
-  <h2>🎄 Merry Christmas 💖</h2>
-  <p>
-    You just filled this tree with love ✨  
-    May your days be warm, kind, and full of smiles 🌸
-  </p>
+  <h2>🎄 Merry Christmas! 💖</h2>
+  <p id="msgText"></p>
   <a class="back" href="index.html">Back Home</a>
 </div>
 
+<!-- Floating hearts -->
+<div class="heart" style="top:10%; left:20%;">💖</div>
+<div class="heart" style="top:15%; left:70%;">💗</div>
+<div class="heart" style="top:40%; left:50%;">💕</div>
+
 <script>
-const heart = document.getElementById("heart");
-const tree = document.getElementById("tree");
-const message = document.getElementById("message");
+const gifts = document.querySelectorAll('.gift');
+const message = document.getElementById('message');
+const msgText = document.getElementById('msgText');
 
-let dragging = false;
+let openedCount = 0;
 
-heart.addEventListener("mousedown", () => dragging = true);
-document.addEventListener("mouseup", () => dragging = false);
-
-document.addEventListener("mousemove", e => {
-  if (dragging) {
-    heart.style.left = e.clientX - 20 + "px";
-    heart.style.top = e.clientY - 20 + "px";
-
-    const heartRect = heart.getBoundingClientRect();
-    const treeRect = tree.getBoundingClientRect();
-
-    if (
-      heartRect.right > treeRect.left &&
-      heartRect.left < treeRect.right &&
-      heartRect.bottom > treeRect.top &&
-      heartRect.top < treeRect.bottom
-    ) {
-      triggerSuccess();
+gifts.forEach(gift => {
+  gift.addEventListener('click', () => {
+    msgText.textContent = gift.dataset.msg;
+    message.style.display = 'block';
+    gift.style.visibility = 'hidden';
+    openedCount++;
+    // Final magical message after all gifts opened
+    if(openedCount === gifts.length){
+      setTimeout(() => {
+        msgText.textContent = "💖 You’ve unlocked all the Christmas magic! 🎄✨";
+      }, 1000);
     }
-  }
+  });
 });
 
-function triggerSuccess() {
-  dragging = false;
-  heart.style.display = "none";
-  tree.style.filter = "drop-shadow(0 0 40px hotpink)";
-  message.style.display = "block";
-}
+message.addEventListener('click', () => {
+  message.style.display = 'none';
+});
 </script>
 
 </body>
